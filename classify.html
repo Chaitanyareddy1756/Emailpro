@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-container">
+
+    <div class="page-header">
+
+        <h1>
+            🤖 AI Email Classification
+        </h1>
+
+        <p>
+            Separate business and individual email
+            addresses automatically.
+        </p>
+
+    </div>
+
+
+    <div class="classification-action">
+
+        <h2>
+            Start Classification
+        </h2>
+
+        <p>
+            Analyze your uploaded emails and categorize
+            them into Business, Individual and Unknown.
+        </p>
+
+
+        <form
+            method="POST"
+            action="{{ url_for('run_classification') }}"
+        >
+
+            <button
+                type="submit"
+                class="primary-btn"
+            >
+                🤖 Run AI Classification
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <div class="home-cards">
+
+        <div class="home-card">
+
+            <div class="card-icon">
+                🏢
+            </div>
+
+            <h2>
+                {{ business_count }}
+            </h2>
+
+            <h3>
+                Business Emails
+            </h3>
+
+        </div>
+
+
+        <div class="home-card">
+
+            <div class="card-icon">
+                👤
+            </div>
+
+            <h2>
+                {{ individual_count }}
+            </h2>
+
+            <h3>
+                Individual Emails
+            </h3>
+
+        </div>
+
+
+        <div class="home-card">
+
+            <div class="card-icon">
+                ❓
+            </div>
+
+            <h2>
+                {{ unknown_count }}
+            </h2>
+
+            <h3>
+                Unknown Emails
+            </h3>
+
+        </div>
+
+
+        <div class="home-card">
+
+            <div class="card-icon">
+                ✉️
+            </div>
+
+            <h2>
+                {{ total_count }}
+            </h2>
+
+            <h3>
+                Total Classified
+            </h3>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
