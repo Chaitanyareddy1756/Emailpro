@@ -1,0 +1,646 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="report-page">
+
+
+    <!-- HEADER -->
+
+    <div class="report-header">
+
+        <h1>📈 Campaign Report Dashboard</h1>
+
+        <p>
+            Review email delivery results, campaign performance,
+            and recipient statistics from your latest campaign.
+        </p>
+
+    </div>
+
+
+    <!-- STATISTICS CARDS -->
+
+    <section class="report-cards">
+
+
+        <!-- TOTAL -->
+
+        <div class="report-card">
+
+            <div class="report-icon">
+                ✉️
+            </div>
+
+            <div class="report-number">
+                {{ total }}
+            </div>
+
+            <div class="report-label">
+                Total Recipients
+            </div>
+
+        </div>
+
+
+        <!-- DELIVERED -->
+
+        <div class="report-card">
+
+            <div class="report-icon">
+                ✓
+            </div>
+
+            <div class="report-number">
+                {{ delivered }}
+            </div>
+
+            <div class="report-label">
+                Delivered
+            </div>
+
+        </div>
+
+
+        <!-- FAILED -->
+
+        <div class="report-card">
+
+            <div class="report-icon">
+                ✕
+            </div>
+
+            <div class="report-number">
+                {{ failed }}
+            </div>
+
+            <div class="report-label">
+                Failed
+            </div>
+
+        </div>
+
+
+        <!-- RATE -->
+
+        <div class="report-card">
+
+            <div class="report-icon">
+                %
+            </div>
+
+            <div class="report-number">
+                {{ delivery_rate }}%
+            </div>
+
+            <div class="report-label">
+                Delivery Rate
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- DELIVERY PERFORMANCE -->
+
+    <section class="report-section">
+
+        <h2>
+            📤 Delivery Performance
+        </h2>
+
+        <div class="delivery-bar">
+
+            <div
+    class="delivery-progress"
+    data-rate="{{ delivery_rate }}"
+></div>
+
+        </div>
+
+        <p>
+            {{ delivered }}
+            out of
+            {{ total }}
+            emails were delivered successfully.
+        </p>
+
+    </section>
+
+
+    <!-- EMAIL LISTS -->
+
+    <section class="email-columns">
+
+
+        <!-- DELIVERED -->
+
+        <div class="email-list">
+
+            <h3 class="success">
+                ✓ Delivered Emails
+            </h3>
+
+            <p>
+                Successfully reached recipients.
+            </p>
+
+            {% if delivered_emails %}
+
+                {% for email in delivered_emails %}
+
+                    <div class="email-item">
+
+                        ✓ {{ email }}
+
+                    </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <div class="email-item">
+                    No delivered emails.
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- FAILED -->
+
+        <div class="email-list">
+
+            <h3 class="failed">
+                ✕ Failed Deliveries
+            </h3>
+
+            <p>
+                Emails requiring review or retry.
+            </p>
+
+            {% if failed_emails %}
+
+                {% for email in failed_emails %}
+
+                    <div class="email-item">
+
+                        ✕ {{ email }}
+
+                    </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <div class="email-item">
+                    No failed deliveries.
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </section>
+
+
+    <!-- DETAILED LOG -->
+
+    <section class="report-section">
+
+        <h2>
+            ▦ Detailed Delivery Log
+        </h2>
+
+
+        {% if results %}
+
+        <div class="table-container">
+
+            <table class="delivery-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Email Address
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for result in results %}
+
+                    <tr>
+
+                        <td>
+                            {{ result.email }}
+                        </td>
+
+                        <td>
+
+                            {% if result.status == "delivered" %}
+
+                                <span class="status status-delivered">
+                                    Delivered
+                                </span>
+
+                            {% else %}
+
+                                <span class="status status-failed">
+                                    Failed
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <p>
+            No campaign has been launched yet.
+        </p>
+
+        {% endif %}
+
+    </section>
+
+
+    <!-- CAMPAIGN INSIGHTS -->
+
+    <h2 class="insights-title">
+        Campaign Insights
+    </h2>
+
+
+    <section class="insight-grid">
+
+
+        <div class="insight-card">
+
+            <div class="insight-icon">
+                🎯
+            </div>
+
+            <h3>
+                Reach Analysis
+            </h3>
+
+            <p>
+                Monitor how many recipients
+                successfully received your email.
+            </p>
+
+        </div>
+
+
+        <div class="insight-card">
+
+            <div class="insight-icon">
+                ⚠️
+            </div>
+
+            <h3>
+                Failure Detection
+            </h3>
+
+            <p>
+                Quickly identify failed email
+                addresses for future cleanup.
+            </p>
+
+        </div>
+
+
+        <div class="insight-card">
+
+            <div class="insight-icon">
+                📊
+            </div>
+
+            <h3>
+                Performance Tracking
+            </h3>
+
+            <p>
+                Evaluate campaign effectiveness
+                using delivery statistics.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- DOWNLOAD -->
+
+    <section class="export-section">
+
+        <h2>
+            📥 Export Campaign Report
+        </h2>
+
+        <p>
+            Download the complete delivery report
+            as a CSV file for future analysis.
+        </p>
+
+        <a
+            href="{{ url_for('download_report') }}"
+            class="download-btn"
+        >
+            ⬇ Download Report
+        </a>
+
+    </section>
+
+</div>
+
+
+<style>
+
+.report-page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 50px 25px;
+}
+
+.report-header {
+    text-align: center;
+    margin-bottom: 45px;
+}
+
+.report-header h1 {
+    font-size: 42px;
+    margin-bottom: 15px;
+}
+
+.report-header p {
+    color: #c8d5e8;
+    font-size: 16px;
+}
+
+.report-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 45px;
+}
+
+.report-card {
+    background: rgba(30, 45, 70, 0.8);
+    border-radius: 20px;
+    padding: 30px 20px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.report-icon {
+    font-size: 35px;
+    margin-bottom: 15px;
+}
+
+.report-number {
+    font-size: 34px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.report-label {
+    font-size: 16px;
+    color: #c8d5e8;
+}
+
+.report-section {
+    background: rgba(30, 45, 70, 0.8);
+    border-radius: 20px;
+    padding: 35px;
+    margin-bottom: 35px;
+}
+
+.report-section h2 {
+    margin-bottom: 20px;
+}
+
+.delivery-bar {
+    width: 100%;
+    height: 18px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+.delivery-progress {
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        #20cfff,
+        #8b5cf6
+    );
+    border-radius: 20px;
+}
+
+.email-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin-bottom: 35px;
+}
+
+.email-list {
+    background: rgba(15, 25, 45, 0.7);
+    border-radius: 15px;
+    padding: 25px;
+}
+
+.email-list h3 {
+    margin-bottom: 15px;
+}
+
+.email-item {
+    padding: 12px 0;
+    border-bottom: 1px solid
+        rgba(255, 255, 255, 0.1);
+    word-break: break-word;
+}
+
+.email-item:last-child {
+    border-bottom: none;
+}
+
+.success {
+    color: #22c55e;
+}
+
+.failed {
+    color: #ef4444;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+.delivery-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.delivery-table th,
+.delivery-table td {
+    padding: 15px;
+    text-align: left;
+}
+
+.delivery-table th {
+    background: rgba(40, 55, 80, 0.9);
+}
+
+.delivery-table tr {
+    border-bottom: 1px solid
+        rgba(255, 255, 255, 0.08);
+}
+
+.status {
+    display: inline-block;
+    padding: 7px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.status-delivered {
+    background: #22c55e;
+    color: white;
+}
+
+.status-failed {
+    background: #ef4444;
+    color: white;
+}
+
+.insights-title {
+    text-align: center;
+    font-size: 36px;
+    margin: 60px 0 30px;
+}
+
+.insight-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    margin-bottom: 50px;
+}
+
+.insight-card {
+    background: rgba(30, 45, 70, 0.8);
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+}
+
+.insight-icon {
+    font-size: 40px;
+    margin-bottom: 15px;
+}
+
+.export-section {
+    text-align: center;
+    padding: 45px 25px;
+    border-radius: 20px;
+    background: rgba(30, 45, 70, 0.8);
+    margin-bottom: 50px;
+}
+
+.download-btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 14px 28px;
+    border-radius: 30px;
+    background: linear-gradient(
+        90deg,
+        #20cfff,
+        #8b5cf6
+    );
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.download-btn:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+@media (max-width: 900px) {
+
+    .report-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .insight-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .email-columns {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .report-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .report-page {
+        padding: 30px 15px;
+    }
+
+    .report-header h1 {
+        font-size: 30px;
+    }
+}
+
+</style>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const progress =
+            document.querySelector(".delivery-progress");
+
+        if (progress) {
+
+            const rate =
+                parseFloat(progress.dataset.rate) || 0;
+
+            progress.style.width =
+                Math.min(Math.max(rate, 0), 100) + "%";
+        }
+
+    });
+</script>
+
+{% endblock %}
