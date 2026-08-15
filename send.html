@@ -1,0 +1,410 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+
+    .send-page {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 35px 20px;
+        color: white;
+    }
+
+    .send-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .send-header h1 {
+        font-size: 36px;
+        margin-bottom: 10px;
+    }
+
+    .send-header p {
+        color: #b8c6d9;
+    }
+
+    .alert {
+        padding: 14px 18px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        background: #8f1d1d;
+        color: white;
+    }
+
+    .send-card,
+    .info-card,
+    .workflow-card {
+        background: #0d1d33;
+        border-radius: 12px;
+        padding: 28px;
+        margin-bottom: 25px;
+    }
+
+    .form-group {
+        margin-bottom: 22px;
+    }
+
+    .form-group label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 9px;
+    }
+
+    .form-group input[type="text"],
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 14px;
+        border: none;
+        border-radius: 8px;
+        background: #13233b;
+        color: white;
+        font-size: 15px;
+    }
+
+    .form-group textarea {
+        min-height: 220px;
+        resize: vertical;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+        color: #75839a;
+    }
+
+    .form-group select option {
+        background: #13233b;
+        color: white;
+    }
+
+    .attachment-box {
+        background: #13233b;
+        border-radius: 8px;
+        padding: 14px;
+    }
+
+    .attachment-box input[type="file"] {
+        color: white;
+        width: 100%;
+    }
+
+    .supported {
+        margin-top: 9px;
+        color: #b8c6d9;
+        font-size: 14px;
+    }
+
+    .launch-button {
+        border: none;
+        border-radius: 6px;
+        padding: 13px 22px;
+        font-size: 16px;
+        cursor: pointer;
+        background: white;
+        color: #111;
+        font-weight: bold;
+    }
+
+    .launch-button:hover {
+        background: #dce7f5;
+    }
+
+    .info-card h2,
+    .workflow-card h2 {
+        margin-top: 0;
+    }
+
+    .info-card p {
+        margin: 12px 0;
+    }
+
+    .workflow-step {
+        margin: 20px 0;
+    }
+
+    .workflow-number {
+        font-weight: bold;
+        font-size: 18px;
+        margin-bottom: 7px;
+    }
+
+    .workflow-text {
+        color: #d7e0ec;
+    }
+
+</style>
+
+
+<section class="send-page">
+
+    <div class="send-header">
+
+        <h1>📧 Send Email Campaign</h1>
+
+        <p>
+            Select your target audience and send the campaign
+            automatically to the matching classified email addresses.
+        </p>
+
+    </div>
+
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            {% for category, message in messages %}
+
+                <div class="alert">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+
+    <!-- =========================================
+         CAMPAIGN FORM
+    ========================================== -->
+
+    <div class="send-card">
+
+        <form
+            action="{{ url_for('launch_campaign') }}"
+            method="POST"
+            enctype="multipart/form-data"
+        >
+
+            <!-- EMAIL SUBJECT -->
+
+            <div class="form-group">
+
+                <label for="subject">
+                    Email Subject
+                </label>
+
+                <input
+                    type="text"
+                    id="subject"
+                    name="subject"
+                    placeholder="Enter email subject"
+                    required
+                >
+
+            </div>
+
+
+            <!-- TARGET AUDIENCE -->
+
+            <div class="form-group">
+
+                <label for="audience">
+                    Target Audience
+                </label>
+
+                <select
+                    id="audience"
+                    name="audience"
+                    required
+                >
+
+                    <option value="">
+                        Select Target Audience
+                    </option>
+
+                    <option value="Individual Recipients">
+                        Individual Recipients
+                    </option>
+
+                    <option value="Business Recipients">
+                        Business Recipients
+                    </option>
+
+                    <option value="All Recipients">
+                        All Recipients
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- EMAIL CONTENT -->
+
+            <div class="form-group">
+
+                <label for="content">
+                    Email Content
+                </label>
+
+                <textarea
+                    id="content"
+                    name="content"
+                    placeholder="Write your email content here..."
+                    required
+                ></textarea>
+
+            </div>
+
+
+            <!-- ATTACHMENT -->
+
+            <div class="form-group">
+
+                <label for="attachment">
+                    Attachment
+                </label>
+
+                <div class="attachment-box">
+
+                    <input
+                        type="file"
+                        id="attachment"
+                        name="attachment"
+                        accept=".pdf,.ppt,.pptx,.doc,.docx"
+                    >
+
+                    <div class="supported">
+                        Supported formats:
+                        PDF, PPT, PPTX, DOC, DOCX
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- BUTTON -->
+
+            <button
+                type="submit"
+                class="launch-button"
+            >
+                🚀 Launch Campaign
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- =========================================
+         CAMPAIGN INFORMATION
+    ========================================== -->
+
+    <div class="info-card">
+
+        <h2>📋 Campaign Information</h2>
+
+        <p>
+            <strong>Business Recipients:</strong>
+            {{ business_count }}
+        </p>
+
+        <p>
+            <strong>Individual Recipients:</strong>
+            {{ individual_count }}
+        </p>
+
+        <p>
+            <strong>Total Recipients:</strong>
+            {{ total_count }}
+        </p>
+
+        <p>
+            <strong>Attachment Support:</strong>
+            PDF, PPT, PPTX, DOC, DOCX
+        </p>
+
+        <p>
+            <strong>Delivery Service:</strong>
+            Gmail SMTP
+        </p>
+
+        <p>
+            <strong>Sending Delay:</strong>
+            5 seconds between emails
+        </p>
+
+        <p>
+            <strong>Important:</strong>
+            The selected audience determines which classified
+            email addresses receive the campaign.
+        </p>
+
+    </div>
+
+
+    <!-- =========================================
+         WORKFLOW
+    ========================================== -->
+
+    <div class="workflow-card">
+
+        <h2>Campaign Workflow</h2>
+
+        <div class="workflow-step">
+
+            <div class="workflow-number">1</div>
+
+            <div class="workflow-text">
+                Upload Database
+            </div>
+
+        </div>
+
+
+        <div class="workflow-step">
+
+            <div class="workflow-number">2</div>
+
+            <div class="workflow-text">
+                Remove Duplicates
+            </div>
+
+        </div>
+
+
+        <div class="workflow-step">
+
+            <div class="workflow-number">3</div>
+
+            <div class="workflow-text">
+                AI Classification
+            </div>
+
+        </div>
+
+
+        <div class="workflow-step">
+
+            <div class="workflow-number">4</div>
+
+            <div class="workflow-text">
+                Create Campaign
+            </div>
+
+        </div>
+
+
+        <div class="workflow-step">
+
+            <div class="workflow-number">5</div>
+
+            <div class="workflow-text">
+                Send Emails
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
