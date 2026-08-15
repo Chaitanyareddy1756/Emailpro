@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-container">
+
+    <div class="page-header">
+
+        <h1>
+            🎉 Classification Completed
+        </h1>
+
+        <p>
+            Your email database has been successfully classified.
+        </p>
+
+    </div>
+
+
+    <div class="home-cards">
+
+        <div class="home-card">
+
+            <div class="card-icon">
+                🏢
+            </div>
+
+            <h2>
+                {{ business_count }}
+            </h2>
+
+            <h3>
+                Business Emails
+            </h3>
+
+        </div>
+
+
+        <div class="home-card">
+
+            <div class="card-icon">
+                👤
+            </div>
+
+            <h2>
+                {{ individual_count }}
+            </h2>
+
+            <h3>
+                Individual Emails
+            </h3>
+
+        </div>
+
+
+        <div class="home-card">
+
+            <div class="card-icon">
+                ❓
+            </div>
+
+            <h2>
+                {{ unknown_count }}
+            </h2>
+
+            <h3>
+                Unknown Emails
+            </h3>
+
+        </div>
+
+
+        <div class="home-card">
+
+            <div class="card-icon">
+                ✉️
+            </div>
+
+            <h2>
+                {{ total_count }}
+            </h2>
+
+            <h3>
+                Total Emails
+            </h3>
+
+        </div>
+
+    </div>
+
+
+    <div class="result-section">
+
+        <h2>
+            🏢 Business Emails
+        </h2>
+
+        {% for email in business %}
+
+            <div class="email-row">
+                {{ email }}
+            </div>
+
+        {% else %}
+
+            <p>
+                No business emails found.
+            </p>
+
+        {% endfor %}
+
+    </div>
+
+
+    <div class="result-section">
+
+        <h2>
+            👤 Individual Emails
+        </h2>
+
+        {% for email in individual %}
+
+            <div class="email-row">
+                {{ email }}
+            </div>
+
+        {% else %}
+
+            <p>
+                No individual emails found.
+            </p>
+
+        {% endfor %}
+
+    </div>
+
+
+    <div class="result-section">
+
+        <h2>
+            ❓ Unknown Emails
+        </h2>
+
+        {% for email in unknown %}
+
+            <div class="email-row">
+                {{ email }}
+            </div>
+
+        {% else %}
+
+            <p>
+                No unknown emails found.
+            </p>
+
+        {% endfor %}
+
+    </div>
+
+
+    <div class="center-button">
+
+        <a href="{{ url_for('send') }}" class="primary-btn">
+    ✉️ Continue to Send Campaign
+</a>
+
+    </div>
+
+</div>
+
+{% endblock %}
