@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        EmailPro
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <a
+            href="{{ url_for('index') }}"
+            class="logo"
+        >
+            📧 EmailPro
+        </a>
+
+
+        <div class="nav-links">
+
+            <a href="{{ url_for('index') }}">
+                🏠 Home
+            </a>
+
+            <a href="{{ url_for('upload') }}">
+                ⬆ Upload
+            </a>
+
+            <a href="{{ url_for('classify') }}">
+                🤖 Classify
+            </a>
+
+            <a href="{{ url_for('send') }}">
+               ✈ Send
+            </a>
+
+            <a href="{{ url_for('reports') }}">
+                📊 Reports
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    {% with messages = get_flashed_messages() %}
+
+        {% if messages %}
+
+            <div class="flash-container">
+
+                {% for message in messages %}
+
+                    <div class="flash-message">
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+    {% endwith %}
+
+
+    <main>
+
+        {% block content %}
+
+        {% endblock %}
+
+    </main>
+
+</body>
+
+</html>
