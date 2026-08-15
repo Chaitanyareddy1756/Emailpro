@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-container">
+
+    <div class="page-header">
+
+        <h1>
+            📤 Upload Email Database
+        </h1>
+
+        <p>
+            Upload your CSV file containing email addresses.
+        </p>
+
+    </div>
+
+
+    <form
+        method="POST"
+        action="{{ url_for('upload') }}"
+        enctype="multipart/form-data"
+        class="upload-box"
+    >
+
+        <div class="upload-icon">
+            📁
+        </div>
+
+        <h2>
+            Choose CSV File
+        </h2>
+
+        <p>
+            Upload a CSV file containing your email addresses.
+        </p>
+
+
+        <input
+            type="file"
+            name="file"
+            accept=".csv"
+            required
+        >
+
+
+        <button
+            type="submit"
+            class="primary-btn"
+        >
+            Upload CSV
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}
