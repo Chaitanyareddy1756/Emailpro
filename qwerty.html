@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+{% block content %}
+<nav>
+
+    <a href="{{ url_for('home') }}">
+        Home
+    </a>
+
+    <a href="{{ url_for('upload') }}">
+        Upload
+    </a>
+
+    <a href="{{ url_for('classify') }}">
+        Classify
+    </a>
+
+    <a href="{{ url_for('send') }}">
+        Send
+    </a>
+
+    <a href="{{ url_for('reports') }}">
+        Reports
+    </a>
+
+    <a href="settings.html">
+        Settings
+    </a>
+
+</nav>
+<section class="hero">
+
+    <h1>Email Campaign Center</h1>
+
+    <p>
+        Upload your email database, classify recipients
+        and create personalized email campaigns.
+    </p>
+
+    <a href="{{ url_for('upload') }}"
+       class="button">
+        Get Started
+    </a>
+
+</section>
+
+
+<section class="cards">
+
+    <div class="card">
+
+        <div class="icon">📄</div>
+
+        <h2>Upload CSV</h2>
+
+        <p>
+            Upload your email database
+            containing business or individual emails.
+        </p>
+
+        <a href="{{ url_for('upload') }}"
+           class="button">
+            Upload
+        </a>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="icon">🧹</div>
+
+        <h2>Remove Duplicates</h2>
+
+        <p>
+            Automatically remove duplicate
+            email addresses.
+        </p>
+
+        <button class="button">
+            Clean List
+        </button>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="icon">🤖</div>
+
+        <h2>AI Classification</h2>
+
+        <p>
+            Categorize emails into
+            Business and Individual.
+        </p>
+
+        <a href="{{ url_for('classify') }}"
+           class="button">
+            Classify
+        </a>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="icon">📨</div>
+
+        <h2>Send Campaign</h2>
+
+        <p>
+            Create and send personalized
+            email campaigns.
+        </p>
+
+        <button class="button">
+            Send Emails
+        </button>
+
+    </div>
+
+</section>
+
+{% endblock %}
