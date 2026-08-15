@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page">
+
+    <h1>✅ Upload Successful</h1>
+
+    <p>
+        Your email database has been processed successfully.
+    </p>
+
+
+    <div class="stats">
+
+        <div class="stat-card">
+
+            <h2>{{ total_emails }}</h2>
+
+            <p>Unique Emails</p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <h2>{{ duplicates_removed }}</h2>
+
+            <p>Duplicates Removed</p>
+
+        </div>
+
+    </div>
+
+
+    <br><br>
+
+
+    <a href="{{ url_for('classify') }}"
+       class="button">
+
+        Continue to AI Classification
+
+    </a>
+
+</div>
+
+{% endblock %}
