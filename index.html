@@ -1,0 +1,225 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="home-page">
+
+    <!-- HEADER -->
+
+    <div class="home-header">
+
+        <h1>
+            🤖 AI Email Classification
+        </h1>
+
+        <p>
+            Separate business and individual email
+            addresses automatically using AI.
+        </p>
+
+    </div>
+
+
+    <!-- CLASSIFICATION ACTION -->
+
+    <div class="home-action">
+
+        <h2>
+            Start Classification
+        </h2>
+
+        <p>
+            Analyze your uploaded emails and categorize
+            them into Business, Individual and Unknown.
+        </p>
+
+        <a
+            href="{{ url_for('classify') }}"
+            class="primary-btn"
+        >
+            🤖 Run AI Classification
+        </a>
+
+    </div>
+
+
+    <!-- STATISTICS -->
+
+    <div class="home-cards">
+
+
+        <!-- BUSINESS -->
+
+        <div class="home-card">
+
+            <div class="card-icon">
+                🏢
+            </div>
+
+            <h2>
+                {{ business_count }}
+            </h2>
+
+            <h3>
+                Business Emails
+            </h3>
+
+            <p>
+                Company email addresses.
+            </p>
+
+        </div>
+
+
+        <!-- INDIVIDUAL -->
+
+        <div class="home-card">
+
+            <div class="card-icon">
+                👤
+            </div>
+
+            <h2>
+                {{ individual_count }}
+            </h2>
+
+            <h3>
+                Individual Emails
+            </h3>
+
+            <p>
+                Personal email addresses.
+            </p>
+
+        </div>
+
+
+        <!-- UNKNOWN -->
+
+        <div class="home-card">
+
+            <div class="card-icon">
+                ❓
+            </div>
+
+            <h2>
+                {{ unknown_count }}
+            </h2>
+
+            <h3>
+                Unknown Emails
+            </h3>
+
+            <p>
+                Addresses that need review.
+            </p>
+
+        </div>
+
+
+        <!-- TOTAL -->
+
+        <div class="home-card">
+
+            <div class="card-icon">
+                ✉️
+            </div>
+
+            <h2>
+                {{ total_count }}
+            </h2>
+
+            <h3>
+                Total Emails
+            </h3>
+
+            <p>
+                All processed emails.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- CAMPAIGN WORKFLOW -->
+
+    <div class="workflow-section">
+
+        <h2>
+            Campaign Workflow
+        </h2>
+
+        <div class="workflow">
+
+            <div class="workflow-step">
+
+                <div class="step-number">
+                    1
+                </div>
+
+                <p>
+                    Upload Database
+                </p>
+
+            </div>
+
+
+            <div class="workflow-step">
+
+                <div class="step-number">
+                    2
+                </div>
+
+                <p>
+                    Remove Duplicates
+                </p>
+
+            </div>
+
+
+            <div class="workflow-step">
+
+                <div class="step-number">
+                    3
+                </div>
+
+                <p>
+                    AI Classification
+                </p>
+
+            </div>
+
+
+            <div class="workflow-step">
+
+                <div class="step-number">
+                    4
+                </div>
+
+                <p>
+                    Create Campaign
+                </p>
+
+            </div>
+
+
+            <div class="workflow-step">
+
+                <div class="step-number">
+                    5
+                </div>
+
+                <p>
+                    Send Emails
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
