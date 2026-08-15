@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="hero">
+
+    <h1>
+        ⚙️ Settings
+    </h1>
+
+    <p>
+        Configure how EmailPro processes your email database.
+    </p>
+
+</section>
+
+
+<section class="form-card">
+
+    <form
+        action="{{ url_for('settings') }}"
+        method="POST"
+    >
+
+
+        <!-- AUTO CLASSIFICATION -->
+
+        <label class="checkbox-label">
+
+            <input
+                type="checkbox"
+                name="auto_classify"
+                {% if auto_classify %}
+                checked
+                {% endif %}
+            >
+
+            <span>
+                Auto Classify Uploaded Emails
+            </span>
+
+        </label>
+
+
+        <p>
+            Automatically classify emails after
+            uploading the CSV.
+        </p>
+
+
+        <!-- REMOVE DUPLICATES -->
+
+        <label class="checkbox-label">
+
+            <input
+                type="checkbox"
+                name="remove_duplicates"
+                {% if remove_duplicates %}
+                checked
+                {% endif %}
+            >
+
+            <span>
+                Remove Duplicate Emails
+            </span>
+
+        </label>
+
+
+        <p>
+            Remove duplicate email addresses
+            while processing the CSV.
+        </p>
+
+
+        <!-- SAVE -->
+
+        <button
+            type="submit"
+            class="button"
+        >
+            Save Settings
+        </button>
+
+
+    </form>
+
+</section>
+
+{% endblock %}
